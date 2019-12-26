@@ -21,6 +21,7 @@ public class ShreddingScript : MonoBehaviour
     #region public variables
     public GameObject endPointObject; // the end point that the cheese reaches to stop shredding
     public Image progressBarImage;
+    public Text percentageText;
     #endregion
 
     #region Private Methods
@@ -50,16 +51,13 @@ public class ShreddingScript : MonoBehaviour
     void FillProgressBarByTransfor()
     {
         float distanceTravelled = Mathf.Abs(originalX - this.transform.position.x);
-        Debug.Log("distance travelled > " + distanceTravelled);
-        Debug.Log("distance between cheese and end point > "+ distanceBetweenCheeseAndEndoint);
         float fillValue = distanceTravelled / distanceBetweenCheeseAndEndoint; // progressBarImage.rectTransform.rect.width;
-
-        Debug.Log("Fill value > " + fillValue);
         progressBarImage.fillAmount = fillValue;
-        Debug.Log("____________________________________________");
 
+        int percentage = (int)(progressBarImage.fillAmount * 100);
+
+        percentageText.text = percentage + " %";
     }
-    
 
     #endregion
 
