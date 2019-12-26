@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/CheeseShreddingScene.unity
+    guid: 79967b66dcb8e47878ef21e8681f7c48
   m_configObjects: {}
