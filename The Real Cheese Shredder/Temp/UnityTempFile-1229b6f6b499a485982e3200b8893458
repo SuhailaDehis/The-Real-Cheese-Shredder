@@ -291,3 +291,5 @@
 /define:CSHARP_7_OR_LATER
 /define:CSHARP_7_3_OR_NEWER
 "Assets/Scripts/CameraShake.cs"
+"Assets/Scripts/MovingHandler.cs"
+"Assets/Scripts/Particles.cs"
