@@ -7,7 +7,8 @@ public class ShreddingScript : MonoBehaviour
 {
     #region Testing Variables
     public float decreaseMargin = 0.05f;// how much the cheese will decrease over speed
-    public float cheeseSpeed = 5f;
+    float cheeseSpeed;
+    public float cheeseSpeedFactor;
     public float minimumScaleToFinish = 0.3f;
     #endregion
 
@@ -36,16 +37,16 @@ public class ShreddingScript : MonoBehaviour
     void ShredCheeseByTransform()
     {
         // implementation 2 , move the cheese inside the gritter until its unseen
-        float newX = this.gameObject.transform.position.x + (decreaseMargin * Time.deltaTime * cheeseSpeed);
-        this.transform.position = new Vector3(newX, originalY, orginalZ);
+        //  float newY = this.gameObject.transform.localPosition.y
+        this.transform.localPosition -= transform.up * (decreaseMargin * Time.deltaTime * cheeseSpeed);
 
         // fill the progress bar
         FillProgressBarByTransfor();
 
-        if (this.transform.position.x > endPointObject.transform.position.x)
-        {
-            GameManager.instance.GameOver();
-        }
+        //if (this.transform.position.x > endPointObject.transform.position.x)
+        //{
+        //    GameManager.instance.GameOver();
+        //}
     }
 
     void FillProgressBarByTransfor()
@@ -77,8 +78,8 @@ public class ShreddingScript : MonoBehaviour
         //{
         //    ShredCheeseByScale();
         //}
-
-        if (cheeseSpeed > 0 && this.transform.position.x < endPointObject.transform.position.x)
+        cheeseSpeed = MovingHandler.currentSpeed.sqrMagnitude * cheeseSpeedFactor;
+        if (cheeseSpeed > 0 && this.transform.localPosition.y > endPointObject.transform.localPosition.y)
         {
             ShredCheeseByTransform();
         }

@@ -4,39 +4,33 @@ using UnityEngine;
 
 public class MovingHandler : MonoBehaviour
 {
-    public float sideSpeed = 0.1f;
-   // public LevelData levelData;
-   // public PlayerSavedData playerData;
-    public Transform roadRight;
-    public Transform roadLeft;
-   // MyData currentLevelData;
+    public float speed = 0.1f;
+    public static Vector3 currentSpeed;
+    public Transform Top;
+    public Transform Bottom;
     Vector3 touchDelta;
     Vector3 temp;
-    float offset;
-    private void Awake()
-    {
-    //    currentLevelData = levelData.GetCurrentLevel(playerData.actualLevel);
-    }
+
     void Update()
     {
         Move();
     }
     public void Move()
     {
-       // if (GameStateOwner.GameState == GameState.Play)
-       // {
-            if (Input.touchCount > 0)
-            {
-                touchDelta = Input.GetTouch(0).deltaPosition;
-                transform.position += Vector3.right * touchDelta.x * Time.deltaTime * sideSpeed;
-            }
-         //   transform.position += Vector3.forward * currentLevelData.cheeseSpeed * Time.deltaTime;
-            temp = transform.position;
-            offset = 1.5f * transform.localScale.x;
-            temp.x = Mathf.Clamp(transform.position.x, roadLeft.position.x + offset, roadRight.position.x - offset);
-            transform.position = temp;
-       // }
+
+        if (Input.touchCount > 0)
+        {
+            touchDelta = Input.GetTouch(0).deltaPosition;
+            currentSpeed = transform.forward * touchDelta.y * Time.deltaTime * speed;
+            transform.position -= currentSpeed;
+        }
+        temp = transform.localPosition;
+        temp.y = Mathf.Clamp(transform.localPosition.y, Top.localPosition.y, Bottom.localPosition.y);
+        temp.x = Mathf.Clamp(transform.localPosition.x, Top.localPosition.x, Bottom.localPosition.x);
+        temp.z = Mathf.Clamp(transform.localPosition.z, Top.localPosition.z, Bottom.localPosition.z);
+        transform.position = temp;
+
     }
- 
+
 
 }

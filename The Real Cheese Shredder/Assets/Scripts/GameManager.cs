@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
         startgamePanel.SetActive(false);
         gameOverPanel.SetActive(false);
         gamePlayPanel.SetActive(true);
-        shreddingScript.cheeseSpeed = 5;
     }
 
 
