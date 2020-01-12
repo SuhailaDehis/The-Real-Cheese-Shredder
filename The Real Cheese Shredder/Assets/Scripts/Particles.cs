@@ -43,8 +43,22 @@ public class Particles : MonoBehaviour
         speed = MovingHandler.currentSpeed;
         if (Mathf.Abs(spawnFactor*speed)>0)
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        if (PlayerPrefs.GetInt("isvibration") == 0)
+        {
+        
+        Vibration.Vibrate(20);
+        }
+#endif
+#if UNITY_IOS && !UNITY_EDITOR
+         if (PlayerPrefs.GetInt("isvibration") == 0)
+        {
+        Vibration.VibratePop();
+        }
+#endif
             if (shredParticlesAvailable.Count > 0)
             {
+
                 tempObject = shredParticlesAvailable.Dequeue();
                 tempObject.transform.position = transform.position;
                 tempObject.SetActive(true);
