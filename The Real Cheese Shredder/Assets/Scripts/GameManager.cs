@@ -2,27 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+public enum GameStates { MainMenu, Playing, EndMenu }
 public class GameManager : MonoBehaviour
 {
     #region Public Variables
-    public static GameManager instance;
-    public GameObject startgamePanel, gameOverPanel,gamePlayPanel;
-    public ShreddingScript shreddingScript;
-
-
-    
+    public GameObject startgamePanel, gameOverPanel, gamePlayPanel;
+    public delegate void CheckState(GameStates currentState);
+    public static event CheckState CheckMyStates;
     #endregion
+    static GameStates currentState;
 
+    public static GameStates CurrentState
+    {
+        get => currentState;
+        set
+        {
+            currentState = value;
+            CheckMyStates.Invoke(currentState);
+        }
+    }
     #region Public Methods
     public void StartGame()
     {
-        startgamePanel.SetActive(false);
-        gameOverPanel.SetActive(false);
-        gamePlayPanel.SetActive(true);
+        CurrentState = GameStates.Playing;
     }
-
-
     public void RestartGame()
     {
         SceneManager.LoadScene(0);
@@ -30,9 +33,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        startgamePanel.SetActive(false);
-        gameOverPanel.SetActive(true);
-        gamePlayPanel.SetActive(false);
+        CurrentState = GameStates.EndMenu;
     }
 
     #endregion
@@ -41,10 +42,7 @@ public class GameManager : MonoBehaviour
     #region Unity Callbacks
     private void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        CurrentState = GameStates.MainMenu;
     }
     #endregion
 }
